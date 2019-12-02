@@ -25,9 +25,24 @@ const RoomCard = ({ selected }) => {
   });
   return (
     <div className="roomCardContainer">
-      <img src={selected.attributes.img_url} alt={selected.label}></img>
+      <img
+        src={`${selected.attributes.img_url}?aki_policy=large`}
+        alt={selected.label}
+      ></img>
       <table>
         <tbody>
+          <tr>
+            <td>Start collage</td>
+            <td>
+              <a
+                href={`http://dept-collage.dcfvg.fr/#${selected.label}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                open
+              </a>
+            </td>
+          </tr>
           <tr>
             <td>ID</td>
             <td>

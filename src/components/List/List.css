@@ -1,0 +1,15 @@
+.listingBox {
+  display: inline-flex;
+  flex: 0 0 calc(100% / 3);
+  max-width: calc(100% / 3);
+  width: calc(100% / 3);
+  height: auto;
+  cursor: pointer;
+}
+
+.listingContianer {
+  display: flex;
+  overflow-y: scroll;
+  height: 100%;
+  flex-wrap: wrap;
+}

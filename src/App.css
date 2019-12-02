@@ -7,6 +7,14 @@
 
 .networkContainer {
   flex: 0 0 70%;
+  position: relative;
+}
+
+.switchButton {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 999;
 }
 
 .inputContainer {

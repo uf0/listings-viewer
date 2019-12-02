@@ -4,6 +4,7 @@ import { Form, Field } from "react-final-form";
 import Geocode from "react-geocode";
 import Network from "./components/Network";
 import RoomCard from "./components/RoomCard";
+import List from "./components/List";
 import "./App.css";
 import graph from "./networkMerged.json";
 
@@ -127,7 +128,7 @@ function App() {
     .y(n => n.attributes.latitude)
     .addAll(test.nodes);
 
-  // const [filtered, setFiltered] = useState(test);
+  const [list, setList] = useState(false);
   // const [lngLat, setLngLat] = useState(null);
   const [filter, setFilter] = useState(null);
   // const [priceClusters, setPriceClusters] = useState(null);
@@ -184,15 +185,27 @@ function App() {
     );
 
     //get available clusters
-    const mapping = test.nodes
-      .filter(d => d.attributes.geocluster === filter.geocluster)
-      .map(d => d.attributes.price_cluster);
 
-    const availableClusters = [...new Set(mapping)].sort(function(a, b) {
-      return a - b;
-    });
+    let mapping = [];
+
+    if (filter && filter.geocluster) {
+      mapping = test.nodes
+        .filter(d => d.attributes.geocluster === filter.geocluster)
+        .map(d => d.attributes.price_cluster);
+    } else {
+      mapping = test.nodes
+        //.filter(d => d.attributes.geocluster === filter.geocluster)
+        .map(d => d.attributes.price_cluster);
+    }
+
+    const availableClusters = [...new Set(mapping)]
+      .sort(function(a, b) {
+        return a - b;
+      })
+      .filter(d => d !== undefined);
 
     const pricecluster = closest(availableClusters, inputCluster);
+
     setFilter({ ...filter, pricecluster });
   };
 
@@ -228,11 +241,23 @@ function App() {
   return (
     <div className="App">
       <div className="networkContainer">
-        <Network
-          graph={test}
-          filter={filter}
-          setSelected={setSelected}
-        ></Network>
+        <button
+          className="switchButton"
+          onClick={() => {
+            setList(!list);
+          }}
+        >
+          {list ? "Network view" : "List view"}
+        </button>
+        {list ? (
+          <List graph={test} filter={filter} setSelected={setSelected}></List>
+        ) : (
+          <Network
+            graph={test}
+            filter={filter}
+            setSelected={setSelected}
+          ></Network>
+        )}
       </div>
       <div className="inputContainer">
         <Form
