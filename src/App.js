@@ -179,7 +179,8 @@ function App() {
   };
 
   const onSubmitPrice = values => {
-    const pricePerDay = +values.price / +values.people / 30;
+    const people = values.people ? +values.people : 1;
+    const pricePerDay = +values.price / people / 30;
 
     const inputCluster = getClusterFromPrice(
       pricePerDay,
