@@ -143,7 +143,7 @@ function App() {
           response.results[0].geometry.location.lat
         ];
         const nearest = listingsQT.find(lngLat[0], lngLat[1]);
-        setFilter({ geocluster: nearest.attributes.geocluster });
+        setFilter({ ...filter, geocluster: nearest.attributes.geocluster });
       }
     } catch (e) {
       console.log(e);
