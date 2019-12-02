@@ -25,10 +25,16 @@ const RoomCard = ({ selected }) => {
   });
   return (
     <div className="roomCardContainer">
-      <img
-        src={`${selected.attributes.img_url}?aki_policy=large`}
-        alt={selected.label}
-      ></img>
+      <a
+        href={`http://dept-collage.dcfvg.fr/#${selected.label}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          src={`${selected.attributes.img_url}?aki_policy=large`}
+          alt={selected.label}
+        ></img>
+      </a>
       <table>
         <tbody>
           <tr>

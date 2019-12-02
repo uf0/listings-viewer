@@ -129,13 +129,14 @@ function App() {
     .addAll(test.nodes);
 
   const [list, setList] = useState(false);
-  // const [lngLat, setLngLat] = useState(null);
+  const [addressNotFound, setAddressNotFound] = useState(false);
   const [filter, setFilter] = useState(null);
   // const [priceClusters, setPriceClusters] = useState(null);
   const [selected, setSelected] = useState(null);
 
   const onSubmit = async values => {
     try {
+      setAddressNotFound(false);
       const response = await Geocode.fromAddress(values.adderess);
       if (response.status === "OK") {
         const lngLat = [
@@ -146,6 +147,7 @@ function App() {
         setFilter({ ...filter, geocluster: nearest.attributes.geocluster });
       }
     } catch (e) {
+      setAddressNotFound(true);
       console.log(e);
     }
   };
@@ -232,10 +234,31 @@ function App() {
       occupancyClusterIntervals
     );
 
-    //filtrare geo + price
+    let mapping = [];
+
+    mapping = test.nodes.filter(d => {
+      const geocluster =
+        filter && filter.geocluster
+          ? d.attributes.geocluster === filter.geocluster
+          : true;
+      const pricecluster =
+        filter && filter.pricecluster
+          ? d.attributes.price_cluster === filter.pricecluster
+          : true;
+
+      const occupancyclusterPrivate =
+        filter && filter.occupancycluster
+          ? d.attributes.occupancy_cluster_string === occupancycluster
+          : true;
+      return geocluster && pricecluster && occupancyclusterPrivate;
+    });
+
+    if (mapping.length > 0) {
+      setFilter({ ...filter, occupancycluster });
+    }
 
     //che fare anche se non c'è nel filtro
-    setFilter({ ...filter, occupancycluster });
+    //setFilter({ ...filter, occupancycluster });
   };
 
   return (
@@ -285,6 +308,7 @@ function App() {
                 <button type="submit" disabled={submitting || pristine}>
                   Submit
                 </button>
+                {addressNotFound && <p>Address not found, try again</p>}
               </div>
             </form>
           )}
@@ -343,7 +367,7 @@ function App() {
                   ></Field>
                 </p>
                 <p>
-                  <label>beds: </label>
+                  <label>bedrooms: </label>
                   <Field name="beds" component="input" type="number"></Field>
                 </p>
                 <p>

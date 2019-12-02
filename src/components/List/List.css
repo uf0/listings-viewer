@@ -5,6 +5,7 @@
   width: calc(100% / 3);
   height: auto;
   cursor: pointer;
+  object-fit: contain;
 }
 
 .listingContianer {
