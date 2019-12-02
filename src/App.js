@@ -330,12 +330,22 @@ function App() {
                 </h6>
                 <p>
                   <label>Price per month: </label>
-                  <Field name="price" component="input" type="number"></Field>
+                  <Field
+                    name="price"
+                    component="input"
+                    type="number"
+                    required
+                  ></Field>
                 </p>
 
                 <p>
                   <label>People: </label>
-                  <Field name="people" component="input" type="number"></Field>
+                  <Field
+                    name="people"
+                    component="input"
+                    type="number"
+                    required
+                  ></Field>
                 </p>
 
                 <button type="submit" disabled={submitting || pristine}>
@@ -365,11 +375,17 @@ function App() {
                     name="accomodates"
                     component="input"
                     type="number"
+                    required
                   ></Field>
                 </p>
                 <p>
                   <label>bedrooms: </label>
-                  <Field name="beds" component="input" type="number"></Field>
+                  <Field
+                    name="beds"
+                    component="input"
+                    type="number"
+                    required
+                  ></Field>
                 </p>
                 <p>
                   <label>bathrooms: </label>
@@ -377,6 +393,7 @@ function App() {
                     name="bathrooms"
                     component="input"
                     type="number"
+                    required
                   ></Field>
                 </p>
                 <button type="submit" disabled={submitting || pristine}>
